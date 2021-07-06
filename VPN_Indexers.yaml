@@ -22,7 +22,7 @@ services:
       - 5050:5050
       - 8081:8081
       - 8686:8686
-
+      - 8787:8787
   #  torrent:
   #    image: ghcr.io/linuxserver/qbittorrent
   #    network_mode: service:vpn
@@ -160,8 +160,9 @@ services:
   readarr:
     container_name: readarr
     image: hotio/readarr:nightly
-    ports:
-      - "8787:8787"
+    network_mode: "service:vpn"
+    #    ports:
+    #      - "8787:8787"
     environment:
       - PUID=${PUID}
       - PGID=${PUID}
