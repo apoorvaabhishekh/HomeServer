@@ -159,7 +159,7 @@ services:
 
   readarr:
     container_name: readarr
-    image: hotio/readarr
+    image: hotio/readarr:nightly
     ports:
       - "8787:8787"
     environment:
