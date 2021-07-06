@@ -13,7 +13,7 @@ services:
       - NETWORK=192.168.0.0/24 # So it can be accessed within the local network
     #    network_mode : bridge
     ports:
-#      - 8080:8080
+      #      - 8080:8080
       - 9117:9117
       - 7878:7878
       - 8989:8989
@@ -23,16 +23,16 @@ services:
       - 8081:8081
       - 8686:8686
 
-#  torrent:
-#    image: ghcr.io/linuxserver/qbittorrent
-#    network_mode: service:vpn
-#    container_name: qbittorrent_vpn
-#    depends_on:
-#      - vpn
-#    volumes:
-#      - ${CONFIGDIR}/qbittorrent/:/config
-#      - ${MEDIADIR}/downloads/:/downloads
-#
+  #  torrent:
+  #    image: ghcr.io/linuxserver/qbittorrent
+  #    network_mode: service:vpn
+  #    container_name: qbittorrent_vpn
+  #    depends_on:
+  #      - vpn
+  #    volumes:
+  #      - ${CONFIGDIR}/qbittorrent/:/config
+  #      - ${MEDIADIR}/downloads/:/downloads
+  #
   jackett:
     image: linuxserver/jackett
     container_name: jackett_vpn
@@ -155,4 +155,20 @@ services:
       - ${MEDIADIR}/downloads/:/downloads
     #ports:
     #  - 8686:8686
+    restart: unless-stopped
+
+  readarr:
+    container_name: readarr
+    image: hotio/readarr
+    ports:
+      - "8787:8787"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - ${CONFIGDIR}/readarr/:/config
+      - ${MEDIADIR}/Media/Books/:/Book
+      - ${MEDIADIR}/downloads/:/downloads
     restart: unless-stopped

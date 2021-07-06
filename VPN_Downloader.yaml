@@ -19,7 +19,7 @@ services:
 
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent
-    container_name: qbittorrent_vpn
+    container_name: qbittorrent_vpn_IN
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
