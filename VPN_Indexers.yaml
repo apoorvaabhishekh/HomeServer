@@ -1,0 +1,158 @@
+version: "2.1"
+services:
+  vpn:
+    container_name: nord_vpn
+    image: ghcr.io/bubuntux/nordvpn
+    cap_add:
+      - NET_ADMIN # Required
+    environment: # Review https://github.com/bubuntux/nordvpn#environment-variables
+      - USER=${VPN_USERID} # Required
+      - PASS=${VPN_PASSWD} # Required
+      - CONNECT=${VPN_COUNTRY}
+      - TECHNOLOGY=NordLynx
+      - NETWORK=192.168.0.0/24 # So it can be accessed within the local network
+    #    network_mode : bridge
+    ports:
+      - 8080:8080
+      - 9117:9117
+      - 7878:7878
+      - 8989:8989
+      - 3579:3579
+      - 9696:9696
+      - 5050:5050
+      - 8081:8081
+      - 8686:8686
+
+  torrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    network_mode: service:vpn
+    container_name: qbittorrent_vpn
+    depends_on:
+      - vpn
+    volumes:
+      - ${CONFIGDIR}/qbittorrent/:/config
+      - ${MEDIADIR}/downloads/:/downloads
+
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett_vpn
+    network_mode: "service:vpn"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+      - AUTO_UPDATE=true #optional
+      - RUN_OPTS=#optional
+    volumes:
+      - ${CONFIGDIR}/jackett/:/config
+      #Jackett only needs config
+    restart: unless-stopped
+
+  radarr:
+    container_name: radarr_vpn
+    restart: unless-stopped
+    #ports:
+    # - 7878:7878
+    volumes:
+      - ${CONFIGDIR}/radarr/:/config
+      - ${MEDIADIR}/Media/Movies/:/movies
+      - ${MEDIADIR}/downloads/:/downloads
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    network_mode: "service:vpn"
+    image: ghcr.io/linuxserver/radarr
+
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr
+    container_name: sonarr_vpn
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIGDIR}/jackett/:/config
+      - ${MEDIADIR}/Media/TV/:/tv
+      - ${MEDIADIR}/downloads/:/downloads
+    #ports:
+    # - 8989:8989
+    network_mode: "service:vpn"
+    restart: unless-stopped
+
+  ombi:
+    image: linuxserver/ombi
+    container_name: ombi_vpn
+    network_mode: "service:vpn"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    #  - BASE_URL=/ombi #optional
+    volumes:
+      - ${CONFIGDIR}/ombi:/config
+    #ports:
+    #  - 3579:3579
+    restart: unless-stopped
+
+  prowlarr:
+    image: ghcr.io/linuxserver/prowlarr:nightly
+    container_name: prowlarr_vpn
+    network_mode: "service:vpn"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIGDIR}/prowlarr/:/config
+    #ports:
+    #  - 9696:9696
+    restart: unless-stopped
+
+  couchpotato:
+    image: ghcr.io/linuxserver/couchpotato
+    container_name: couchpotato_vpn
+    network_mode: "service:vpn"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIGDIR}/couchpotato/:/config
+      - ${MEDIADIR}/Media/Movies/:/movies
+      - ${MEDIADIR}/downloads/:/downloads
+    #ports:
+    #  - 5050:5050
+    restart: unless-stopped
+
+  sickchill:
+    image: ghcr.io/linuxserver/sickchill
+    container_name: sickchill_vpn
+    network_mode: "service:vpn"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIGDIR}/jackett/:/config
+      - ${MEDIADIR}/Media/TV/:/tv
+      - ${MEDIADIR}/downloads/:/downloads
+    #ports:
+    #  - 8081:8081
+    restart: unless-stopped
+
+  lidarr:
+    image: ghcr.io/linuxserver/lidarr
+    container_name: lidarr_vpn
+    network_mode: "service:vpn"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIGDIR}/lidarr/:/config
+      - ${MEDIADIR}/Media/Music/:/music
+      - ${MEDIADIR}/downloads/:/downloads
+    #ports:
+    #  - 8686:8686
+    restart: unless-stopped
