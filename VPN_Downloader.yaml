@@ -13,24 +13,20 @@ services:
       - NETWORK=192.168.0.0/24 # So it can be accessed within the local network
     #    network_mode : bridge
     ports:
-      - 8112:8112
       - 6881:6881
       - 6881:6881/udp
+      - 8080:8080
 
-  deluge:
-    image: ghcr.io/linuxserver/deluge
-    container_name: deluge_vpn_IN
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    container_name: qbittorrent_vpn
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - DELUGE_LOGLEVEL=error #optional
+      - WEBUI_PORT=8080
     volumes:
       - ${MEDIADIR}/downloads/:/downloads
-      - ${CONFIGDIR}/deluge/:/config
+      - ${CONFIGDIR}/qbittorrent/:/config
     network_mode: "service:vpn"
-    #    ports:
-    #      - 8112:8112
-    #      - 6881:6881
-    #      - 6881:6881/udp
     restart: unless-stopped
