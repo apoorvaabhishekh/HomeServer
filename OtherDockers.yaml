@@ -58,8 +58,8 @@ services:
       - ${CONFIGDIR}/transmission/:/config
     ports:
       - 8112:8112
-      - 6881:6881
-      - 6881:6881/udp
+      - 6882:6882
+      - 6882:6882/udp
     restart: unless-stopped
 
   overseerr:
