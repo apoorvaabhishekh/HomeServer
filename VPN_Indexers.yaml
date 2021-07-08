@@ -23,6 +23,9 @@ services:
       - 8081:8081
       - 8686:8686
       - 8787:8787
+    volumnes:
+      - ${CONFIGDIR}/shared:/shared
+
   #  torrent:
   #    image: ghcr.io/linuxserver/qbittorrent
   #    network_mode: service:vpn
@@ -45,6 +48,7 @@ services:
       - RUN_OPTS=#optional
     volumes:
       - ${CONFIGDIR}/jackett/:/config
+      - ${CONFIGDIR}/shared:/shared
       #Jackett only needs config
     restart: unless-stopped
 
@@ -57,6 +61,7 @@ services:
       - ${CONFIGDIR}/radarr/:/config
       - ${MEDIADIR}/Media/Movies/:/movies
       - ${MEDIADIR}/downloads/:/downloads
+      - ${CONFIGDIR}/shared:/shared
     environment:
       - PUID=${PUID}
       - PGID=${PUID}
@@ -75,6 +80,7 @@ services:
       - ${CONFIGDIR}/jackett/:/config
       - ${MEDIADIR}/Media/TV/:/tv
       - ${MEDIADIR}/downloads/:/downloads
+      - ${CONFIGDIR}/shared:/shared
     #ports:
     # - 8989:8989
     network_mode: "service:vpn"
@@ -105,6 +111,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${CONFIGDIR}/prowlarr/:/config
+      - ${CONFIGDIR}/shared:/shared
     #ports:
     #  - 9696:9696
     restart: unless-stopped
@@ -121,6 +128,7 @@ services:
       - ${CONFIGDIR}/couchpotato/:/config
       - ${MEDIADIR}/Media/Movies/:/movies
       - ${MEDIADIR}/downloads/:/downloads
+      - ${CONFIGDIR}/shared:/shared
     #ports:
     #  - 5050:5050
     restart: unless-stopped
@@ -137,6 +145,7 @@ services:
       - ${CONFIGDIR}/jackett/:/config
       - ${MEDIADIR}/Media/TV/:/tv
       - ${MEDIADIR}/downloads/:/downloads
+      - ${CONFIGDIR}/shared:/shared
     #ports:
     #  - 8081:8081
     restart: unless-stopped
@@ -153,6 +162,7 @@ services:
       - ${CONFIGDIR}/lidarr/:/config
       - ${MEDIADIR}/Media/Music/:/music
       - ${MEDIADIR}/downloads/:/downloads
+      - ${CONFIGDIR}/shared:/shared
     #ports:
     #  - 8686:8686
     restart: unless-stopped
@@ -172,4 +182,5 @@ services:
       - ${CONFIGDIR}/readarr/:/config
       - ${MEDIADIR}/Media/Books/:/Book
       - ${MEDIADIR}/downloads/:/downloads
+      - ${CONFIGDIR}/shared:/shared
     restart: unless-stopped

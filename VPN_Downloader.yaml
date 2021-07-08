@@ -16,6 +16,8 @@ services:
       - 6881:6881
       - 6881:6881/udp
       - 8080:8080
+    volumes:
+      - ${CONFIGDIR}/shared:/shared
 
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent
@@ -28,5 +30,6 @@ services:
     volumes:
       - ${MEDIADIR}/downloads/:/downloads
       - ${CONFIGDIR}/qbittorrent/:/config
+      - ${CONFIGDIR}/shared:/shared
     network_mode: "service:vpn"
     restart: unless-stopped
