@@ -116,6 +116,22 @@ services:
       - 1234:8010
     restart: unless-stopped
 
+  radarr:
+    image: ghcr.io/linuxserver/radarr
+    container_name: radarr_4k
+    restart: unless-stopped
+    ports:
+      - 17878:17878
+    volumes:
+      - ${CONFIGDIR}/radarr4k/:/config
+      - ${MEDIADIR}/Media/Movies/:/movies
+      - ${MEDIADIR}/downloads/:/downloads
+      - ${CONFIGDIR}/shared:/shared
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    network_mode: "service:vpn"
 
   heimdall:
     image: ghcr.io/linuxserver/heimdall
