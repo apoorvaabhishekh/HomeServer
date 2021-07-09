@@ -131,7 +131,6 @@ services:
       - PUID=${PUID}
       - PGID=${PUID}
       - TZ=${TZ}
-    network_mode: "service:vpn"
 
   heimdall:
     image: ghcr.io/linuxserver/heimdall
