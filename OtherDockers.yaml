@@ -124,7 +124,7 @@ services:
       - 17878:7878
     volumes:
       - ${CONFIGDIR}/radarr4k/:/config
-      - ${MEDIADIR}/Media/Movies/:/movies
+      - ${MEDIADIR}/Media/Movies4k/:/movies
       - ${MEDIADIR}/downloads/:/downloads
       - ${CONFIGDIR}/shared:/shared
     environment:
