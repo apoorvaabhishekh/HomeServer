@@ -23,7 +23,7 @@ services:
       - 8081:8081
       - 8686:8686
       - 8787:8787
-    volumnes:
+    volumes:
       - ${CONFIGDIR}/shared:/shared
 
   #  torrent:
