@@ -147,22 +147,22 @@ services:
       - 11443:443
     restart: unless-stopped
 
-  #  filebrowser:
-  #    image: hurlenko/filebrowser
-  #    container_name: filebrowser
-  #    environment:
-  #      - PUID=${PUID}
-  #      - PGID=${PGID}
-  #      - TZ=${TZ}
-  #      - FB_BASEURL=/filebrowser
-  #    ports:
-  #      - 443:8080
-  #    volumes:
-  #      - ${MEDIADIR}:/data
-  #      - ${CONFIGDIR}/droppy/:/config
-  #      - ${CONFIGDIR}/shared:/shared
-  #    restart: always
-  #
+  filebrowser:
+    image: hurlenko/filebrowser
+    container_name: filebrowser
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - FB_BASEURL=/filebrowser
+    ports:
+      - 7812:7812
+    volumes:
+      - ${MEDIADIR}:/data
+      - ${CONFIGDIR}/droppy/:/config
+      - ${CONFIGDIR}/shared:/shared
+    restart: always
+
   duplicati:
     image: ghcr.io/linuxserver/duplicati
     container_name: duplicati
