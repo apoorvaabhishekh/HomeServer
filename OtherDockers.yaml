@@ -191,7 +191,7 @@ services:
   guacamole:
     container_name: guacamole
     image: oznu/guacamole
-    volumnes:
+    volumes:
       - ${CONFIGDIR}/guacamole/:/config
       - ${CONFIGDIR}/shared:/shared
     ports:
