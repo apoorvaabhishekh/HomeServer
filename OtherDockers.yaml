@@ -196,6 +196,7 @@ services:
       - ${CONFIGDIR}/shared:/shared
     ports:
       - 9600:8080
+    EXTENSIONS: auth-totp
 
 volumes:
   netdataconfig:
