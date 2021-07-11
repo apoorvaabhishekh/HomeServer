@@ -188,6 +188,15 @@ services:
     ports:
       - 9999:8080
 
+  guacamole:
+    container_name: guacamole
+    image: oznu/guacamole
+    volumnes:
+      - ${CONFIGDIR}/guacamole/:/config
+      - ${CONFIGDIR}/shared:/shared
+    ports:
+      - 8080:9600
+
 volumes:
   netdataconfig:
   netdatalib:
