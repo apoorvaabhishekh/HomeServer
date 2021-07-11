@@ -195,7 +195,7 @@ services:
       - ${CONFIGDIR}/guacamole/:/config
       - ${CONFIGDIR}/shared:/shared
     ports:
-      - 8080:9600
+      - 9600:8080
 
 volumes:
   netdataconfig:
