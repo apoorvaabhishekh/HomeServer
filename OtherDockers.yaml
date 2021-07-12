@@ -40,7 +40,7 @@ services:
     volumes:
       - ${MEDIADIR}/downloads/:/downloads
       - ${CONFIGDIR}/transmission/:/config
-      - ${MEDIADIR}/Downloads/:/watch
+      - ${MEDIADIR}/downloads/:/watch
       - ${CONFIGDIR}/shared:/shared
     ports:
       - 9091:9091
